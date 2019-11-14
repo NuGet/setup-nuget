@@ -1,10 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Setup NuGet.exe'
+description: 'Official NuGet.exe setup action.'
+author: 'Microsoft'
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  nuget-version:
+    description: 'NuGet version to install. Can be `latest`, `preview`, a concrete version like `5.3.1`, or a semver range specifier like `5.x`.'
+    default: 'latest'
+  version:
+    description: 'The same as `nuget-version`, but possibly more convenient. `nuget-version` will take precedence over this value.'
+    default: 'latest'
 runs:
   using: 'node12'
   main: 'lib/main.js'
