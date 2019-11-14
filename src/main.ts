@@ -1,5 +1,7 @@
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
+import * as fs from 'fs';
+import * as path from 'path';
 import pickVersion from './pick-version';
 
 async function run() {
@@ -22,7 +24,9 @@ async function run() {
     if (process.platform === 'win32') {
       core.addPath(cachePath);
     } else {
-      // TODO - maybe write a wrapper script that achieves this.
+      const scriptPath = path.join(cachePath, 'nuget');
+      fs.writeFileSync(scriptPath, `#!/bin/sh\nmono nuget.exe $@`);
+      fs.chmodSync(scriptPath, '755');
       core.exportVariable('NUGET', `${cachePath}/nuget.exe`);
     }
   } catch (error) {
