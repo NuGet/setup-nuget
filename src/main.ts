@@ -21,14 +21,14 @@ async function run() {
       );
     }
     core.debug(`nuget.exe cache path: ${cachePath}.`);
-    if (process.platform === 'win32') {
-      core.addPath(cachePath);
-    } else {
-      const scriptPath = path.join(cachePath, 'nuget');
-      fs.writeFileSync(scriptPath, `#!/bin/sh\nmono nuget.exe $@`);
-      fs.chmodSync(scriptPath, '755');
+    if (process.platform !== 'win32') {
+      core.debug(`Creating dummy 'nuget' script.`);
       core.exportVariable('NUGET', `${cachePath}/nuget.exe`);
+      const scriptPath = path.join(cachePath, 'nuget');
+      fs.writeFileSync(scriptPath, `#!/bin/sh\nmono ${cachePath}/nuget.exe $@`);
+      fs.chmodSync(scriptPath, '755');
     }
+    core.addPath(cachePath);
   } catch (error) {
     core.setFailed(error.message);
   }
