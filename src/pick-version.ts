@@ -1,4 +1,4 @@
-import fetch = require('make-fetch-happen');
+import * as rest from 'typed-rest-client/RestClient';
 import * as semver from 'semver';
 
 enum Stage {
@@ -12,6 +12,10 @@ interface Tool {
   url: string;
   stage: Stage;
   uploaded: Date;
+}
+
+interface NuGetTools {
+  'nuget.exe': Tool[];
 }
 
 export default async function pickVersion(spec: string): Promise<Tool> {
@@ -42,9 +46,19 @@ export default async function pickVersion(spec: string): Promise<Tool> {
 }
 
 async function fetchVersions(): Promise<Tool[]> {
+  const http = new rest.RestClient(
+    'nuget/setup-nuget-exe',
+    undefined,
+    undefined,
+    {
+      allowRetries: true,
+      maxRetries: 3
+    }
+  );
   return (
-    await fetch('https://dist.nuget.org/tools.json')
-      .then(j => j.json())
+    await http
+      .get<NuGetTools>('https://dist.nuget.org/tools.json')
+      .then(j => j.result || {'nuget.exe': []})
       .then(n => n['nuget.exe'])
   ).map(v => {
     return {
