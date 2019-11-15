@@ -18,5 +18,5 @@ jobs:
     - uses: ./
       with:
         nuget-version: ${{ matrix.nuget-version }}
-        nuget-api-key: 4003d786-cc37-4004-bfdf-c4f3e8ef9b3a
+        nuget-api-key: ${{ secrets.NuGetAPIKey }}
     - run: nuget
