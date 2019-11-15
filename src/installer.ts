@@ -24,7 +24,7 @@ export default async function install(spec = 'latest') {
     const scriptPath = path.join(cachePath, 'nuget');
     fs.writeFileSync(
       scriptPath,
-      `#!/bin/sh\nmono ${path.join(cachePath, 'nuget.exe')} $@`
+      `#!/bin/sh\nmono $MONO_OPTIONS ${path.join(cachePath, 'nuget.exe')} "$@"`
     );
     fs.chmodSync(scriptPath, '755');
   }
