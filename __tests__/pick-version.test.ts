@@ -92,6 +92,16 @@ test('errors when no version could be found', async () => {
   const srv = nock(HOST);
   srv.get(PATH).reply(200, TOOLS_JSON);
   let promise = pickVersion('4');
-  expect(promise).rejects.toThrow("No valid versions could be found for '4'.");
   promise.catch(() => {}).finally(() => srv.done());
+  expect(promise).rejects.toThrow("No valid versions could be found for '4'.");
+});
+
+test('errors if an invalid label is passed in', async () => {
+  const srv = nock(HOST);
+  srv.get(PATH).reply(200, TOOLS_JSON);
+  let promise = pickVersion('yesterday');
+  promise.catch(() => {}).finally(() => srv.done());
+  expect(promise).rejects.toThrow(
+    "Invalid release label: 'yesterday'. Valid labels are 'latest' and 'preview'."
+  );
 });

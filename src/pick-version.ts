@@ -34,7 +34,7 @@ export default async function pickVersion(spec: string): Promise<Tool> {
         : null;
     if (!stage) {
       throw new Error(
-        `Invalid release label: ${spec}. Valid labels are 'latest' and 'preview'.`
+        `Invalid release label: '${spec}'. Valid labels are 'latest' and 'preview'.`
       );
     }
     selected = versions.find(v => v.stage === stage);
