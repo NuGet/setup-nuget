@@ -22,7 +22,10 @@ export default async function install(spec = 'latest') {
   if (process.platform !== 'win32') {
     core.debug(`Creating dummy 'nuget' script.`);
     const scriptPath = path.join(cachePath, 'nuget');
-    fs.writeFileSync(scriptPath, `#!/bin/sh\nmono ${cachePath}/nuget.exe $@`);
+    fs.writeFileSync(
+      scriptPath,
+      `#!/bin/sh\nmono ${path.join(cachePath, 'nuget.exe')} $@`
+    );
     fs.chmodSync(scriptPath, '755');
   }
   core.addPath(cachePath);

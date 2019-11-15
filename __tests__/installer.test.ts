@@ -1,4 +1,5 @@
 import nock from 'nock';
+import mode2Perm from 'mode-to-permissions';
 import * as path from 'path';
 import * as url from 'url';
 import * as io from '@actions/io';
@@ -67,16 +68,47 @@ describe('installer tests', () => {
 
   test('installs nuget.exe', async () => {
     const srv = nock(HOST);
-    srv.get(PATH).reply(200, TOOLS_JSON);
+    srv
+      .get(PATH)
+      .once()
+      .reply(200, TOOLS_JSON);
     const p = url.parse(TOOLS_JSON['nuget.exe'][0].url).path ?? '';
-    srv.get(p).reply(200, 'abcd');
+    srv
+      .get(p)
+      .once()
+      .reply(200, 'abcd');
     await installer();
-    expect(
-      fs.readFileSync(
-        path.join(tc.find('nuget.exe', '5.3.1'), 'nuget.exe'),
-        'utf8'
-      )
-    ).toEqual('abcd');
     srv.done();
+    const cacheDir = tc.find('nuget.exe', '5.3.1');
+    expect(cacheDir).toBeDefined();
+    expect(fs.readFileSync(path.join(cacheDir, 'nuget.exe'), 'utf8')).toEqual(
+      'abcd'
+    );
+    if (!IS_WINDOWS) {
+      expect(fs.readFileSync(path.join(cacheDir, 'nuget'), 'utf8')).toEqual(
+        `#!/bin/sh\nmono ${path.join(cacheDir, 'nuget.exe')} $@`
+      );
+      // Note: 33261 should be chmod 755
+      const mode = fs.statSync(path.join(cacheDir, 'nuget')).mode;
+      expect(mode2Perm(mode)).toEqual({
+        execute: {
+          owner: true,
+          group: true,
+          others: true
+        },
+        read: {
+          owner: true,
+          group: true,
+          others: true
+        },
+        write: {
+          owner: true,
+          group: false,
+          others: false
+        }
+      });
+    } else {
+      expect(() => fs.readFileSync(path.join(cacheDir, 'nuget'))).toThrow();
+    }
   });
 });
