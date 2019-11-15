@@ -29,4 +29,6 @@ export default async function install(spec = 'latest') {
     fs.chmodSync(scriptPath, '755');
   }
   core.addPath(cachePath);
+  core.setOutput('nuget-version', tool.version);
+  console.log(`Installed nuget.exe version ${tool.version}`);
 }

@@ -62,7 +62,7 @@ describe('installer tests', () => {
       await io.rmRF(toolDir);
       await io.rmRF(tempDir);
     } catch {
-      console.log('Failed to remove test directories');
+      console.error('Failed to remove test directories');
     }
   }, 100000);
 
@@ -88,7 +88,6 @@ describe('installer tests', () => {
       expect(fs.readFileSync(path.join(cacheDir, 'nuget'), 'utf8')).toEqual(
         `#!/bin/sh\nmono $MONO_OPTIONS ${path.join(cacheDir, 'nuget.exe')} "$@"`
       );
-      // Note: 33261 should be chmod 755
       const mode = fs.statSync(path.join(cacheDir, 'nuget')).mode;
       expect(mode2Perm(mode)).toEqual({
         execute: {
