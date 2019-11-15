@@ -34,6 +34,8 @@ steps:
 ### Matrix Testing:
 
 ```yaml
+name: NuGet Restore
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ${{ matrix.os }}
