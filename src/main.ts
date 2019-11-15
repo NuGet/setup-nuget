@@ -7,7 +7,7 @@ import pickVersion from './pick-version';
 async function run() {
   try {
     let spec =
-      core.getInput('nuget-version') || core.getInput('version') || 'latest';
+      core.getInput('nuget-version') || 'latest';
     const tool = await pickVersion(spec);
     core.debug(`Found NuGet version: ${tool}`);
     let cachePath = await tc.find('nuget.exe', tool.version);
