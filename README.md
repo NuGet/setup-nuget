@@ -15,7 +15,7 @@ Supported values for `nuget-version`:
 * `X.Y.Z` -- concrete semver version for a release (e.g. `5.3.1`).
 * semver range -- any [valid semver range specifier](https://github.com/npm/node-semver#ranges) (e.g. `5`, `>=5`, `5.3.x`, etc)
 
-Basic:
+### Basic:
 
 ```yaml
 steps:
@@ -26,7 +26,7 @@ steps:
 - run: nuget restore MyProject.sln
 ```
 
-Matrix Testing:
+### Matrix Testing:
 
 ```yaml
 jobs:
@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macOS-latest]
-        nuget: [latest, preview, 4, 5]
+        nuget: [latest, preview, 4.x, 5.3.1]
     name: NuGet@${{ matrix.nuget }} sample
     steps:
       - uses: actions/checkout@master
@@ -50,6 +50,8 @@ jobs:
 
 The downloaded `nuget.exe` files are automatically cached between runs. To cache
 your global nuget directory, consider using the [official cache action](https://github.com/actions/cache/blob/master/examples.md#c---nuget).
+
+### Caching Example
 
 Note: For this example, you'll need to enable [repeatable builds](https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/) for your project.
 
