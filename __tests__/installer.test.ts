@@ -84,6 +84,7 @@ describe('installer tests', () => {
     expect(fs.readFileSync(path.join(cacheDir, 'nuget.exe'), 'utf8')).toEqual(
       'abcd'
     );
+    expect(process.env['PATH']).toContain(cacheDir);
     if (!IS_WINDOWS) {
       expect(fs.readFileSync(path.join(cacheDir, 'nuget'), 'utf8')).toEqual(
         `#!/bin/sh\nmono $MONO_OPTIONS ${path.join(cacheDir, 'nuget.exe')} "$@"`
