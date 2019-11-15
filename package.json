@@ -1,10 +1,11 @@
 {
-  "name": "typescript-action",
+  "name": "setup-nuget-exe",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Download and install NuGet.exe for use in GitHub Actions.",
   "main": "lib/main.js",
   "scripts": {
+    "prepare": "npm run build",
     "build": "tsc",
     "format": "prettier --write src/**/*.ts",
     "format-check": "prettier --check src/**/*.ts",
