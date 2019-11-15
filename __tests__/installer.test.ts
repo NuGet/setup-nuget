@@ -86,7 +86,7 @@ describe('installer tests', () => {
     );
     if (!IS_WINDOWS) {
       expect(fs.readFileSync(path.join(cacheDir, 'nuget'), 'utf8')).toEqual(
-        `#!/bin/sh\nmono ${path.join(cacheDir, 'nuget.exe')} $@`
+        `#!/bin/sh\nmono $MONO_OPTIONS ${path.join(cacheDir, 'nuget.exe')} "$@"`
       );
       // Note: 33261 should be chmod 755
       const mode = fs.statSync(path.join(cacheDir, 'nuget')).mode;
