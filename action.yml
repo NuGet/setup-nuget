@@ -5,6 +5,10 @@ inputs:
   nuget-version:
     description: 'NuGet version to install. Can be `latest`, `preview`, a concrete version like `5.3.1`, or a semver range specifier like `5.x`.'
     default: 'latest'
+  nuget-api-key:
+    description: 'NuGet API Key to configure.'
+  nuget-api-key-source:
+    description: 'Source to scope the NuGet API Key to.'
 runs:
   using: 'node12'
   main: 'lib/main.js'
