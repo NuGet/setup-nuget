@@ -26,8 +26,8 @@
     "@actions/core": "^1.0.0",
     "@actions/io": "^1.0.1",
     "@actions/tool-cache": "^1.1.2",
-    "make-fetch-happen": "^6.1.0",
-    "semver": "^6.3.0"
+    "semver": "^6.3.0",
+    "typed-rest-client": "^1.5.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
