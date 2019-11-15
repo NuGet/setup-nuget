@@ -1,3 +1,74 @@
 # Setup NuGet.exe
 
-Coming soon...
+This action downloads and installs a given version of `NuGet.exe`. Using this
+action will add `nuget` to your `$PATH` on all operating systems, including
+macOS and linux, without having to prefix it with `mono`.
+
+# Usage
+
+See [action.yml](action.yml)
+
+Supported values for `nuget-version`:
+
+* `latest` -- the latest blessed NuGet release.
+* `preview` -- the latest EarlyAccessPreview release.
+* `X.Y.Z` -- concrete semver version for a release (e.g. `5.3.1`).
+* semver range -- any [valid semver range specifier](https://github.com/npm/node-semver#ranges) (e.g. `5`, `>=5`, `5.3.x`, etc)
+
+Basic:
+
+```yaml
+steps:
+- uses: actions/checkout@master
+- uses: actions/setup-nuget-exe@v1
+  with:
+    nuget-version: '5.x' # SDK Version to use.
+- run: nuget restore MyProject.sln
+```
+
+Matrix Testing:
+
+```yaml
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macOS-latest]
+        nuget: [latest, preview, 4, 5]
+    name: NuGet@${{ matrix.nuget }} sample
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup NuGet.exe
+        uses: actions/setup-nuget-exe@v1
+        with:
+          nuget-version: ${{ matrix.nuget }}
+      - run: nuget restore MyProject.sln
+```
+
+# Caching
+
+The downloaded `nuget.exe` files are automatically cached between runs. To cache
+your global nuget directory, consider using the [official cache action](https://github.com/actions/cache/blob/master/examples.md#c---nuget).
+
+Note: For this example, you'll need to enable [repeatable builds](https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/) for your project.
+
+```yaml
+steps:
+- uses: actions/checkout@master
+- uses: actions/setup-nuget-exe@v1
+  with:
+    nuget-version: '5.x' # SDK Version to use.
+- uses: actions/cache@v1
+  id: cache
+  with:
+    path: ~/.nuget/packages
+    key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+- name: NuGet Restore
+  if: steps.cache.outputs.cache-hit != 'true'
+  run: nuget restore MyProject.sln
+```
+
+# License
+
+The scripts and documentation in this project are released under the [MIT License](LICENSE).
