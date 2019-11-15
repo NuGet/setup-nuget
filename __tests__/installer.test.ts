@@ -72,7 +72,7 @@ describe('installer tests', () => {
       .get(PATH)
       .once()
       .reply(200, TOOLS_JSON);
-    const p = url.parse(TOOLS_JSON['nuget.exe'][0].url).path ?? '';
+    const p = url.parse(TOOLS_JSON['nuget.exe'][0].url).path || '';
     srv
       .get(p)
       .once()
