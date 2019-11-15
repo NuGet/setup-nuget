@@ -10,8 +10,7 @@
     "format": "prettier --write src/**/*.ts",
     "format-check": "prettier --check src/**/*.ts",
     "test": "jest --coverage",
-    "update-deps": "npm prune --production && git add -f node_modules/* && git commit -m \"deps: update node modules\"",
-    "preversion": "npm run update-deps"
+    "update-deps": "npm prune --production && git add -f node_modules/* && git commit -m \"deps: update node modules\""
   },
   "repository": {
     "type": "git",
