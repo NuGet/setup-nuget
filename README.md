@@ -25,7 +25,7 @@ Supported values for `nuget-version`:
 ```yaml
 steps:
 - uses: actions/checkout@master
-- uses: actions/setup-nuget-exe@v1
+- uses: nuget/setup-nuget-exe@v1
   with:
     nuget-version: '5.x' # SDK Version to use.
 - run: nuget restore MyProject.sln
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Setup NuGet.exe
-        uses: actions/setup-nuget-exe@v1
+        uses: nuget/setup-nuget-exe@v1
         with:
           nuget-version: ${{ matrix.nuget }}
       - run: nuget restore MyProject.sln
@@ -65,7 +65,7 @@ Note: For this example, you'll need to enable [repeatable builds](https://devblo
 ```yaml
 steps:
 - uses: actions/checkout@master
-- uses: actions/setup-nuget-exe@v1
+- uses: nuget/setup-nuget-exe@v1
   with:
     nuget-version: '5.x' # SDK Version to use.
 - uses: actions/cache@v1
