@@ -6,8 +6,7 @@ import pickVersion from './pick-version';
 
 async function run() {
   try {
-    let spec =
-      core.getInput('nuget-version') || 'latest';
+    let spec = core.getInput('nuget-version') || 'latest';
     const tool = await pickVersion(spec);
     core.debug(`Found NuGet version: ${tool}`);
     let cachePath = await tc.find('nuget.exe', tool.version);
@@ -21,9 +20,9 @@ async function run() {
       );
     }
     core.debug(`nuget.exe cache path: ${cachePath}.`);
+    core.exportVariable('NUGET', `${cachePath}/nuget.exe`);
     if (process.platform !== 'win32') {
       core.debug(`Creating dummy 'nuget' script.`);
-      core.exportVariable('NUGET', `${cachePath}/nuget.exe`);
       const scriptPath = path.join(cachePath, 'nuget');
       fs.writeFileSync(scriptPath, `#!/bin/sh\nmono ${cachePath}/nuget.exe $@`);
       fs.chmodSync(scriptPath, '755');
