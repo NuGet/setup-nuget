@@ -20,6 +20,12 @@ Supported values for `nuget-version`:
 * `X.Y.Z` -- concrete semver version for a release (e.g. `5.3.1`).
 * semver range -- any [valid semver range specifier](https://github.com/npm/node-semver#ranges) (e.g. `5`, `>=5`, `5.3.x`, etc)
 
+This action also supports configuring your NuGet API key using
+[GitHub secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets).
+The API key should be passed in as an `nuget-api-key` input. See
+[the GitHub documentation on secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets#creating-encrypted-secrets)
+for how to configure secrets on your repository.
+
 ### Basic:
 
 ```yaml
@@ -27,6 +33,7 @@ steps:
 - uses: actions/checkout@master
 - uses: nuget/setup-nuget-exe@v1
   with:
+    nuget-api-key: ${{ secrets.NuGetAPIKey }}
     nuget-version: '5.x' # SDK Version to use.
 - run: nuget restore MyProject.sln
 ```
