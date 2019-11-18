@@ -34,7 +34,7 @@ steps:
 - uses: nuget/setup-nuget-exe@v1
   with:
     nuget-api-key: ${{ secrets.NuGetAPIKey }}
-    nuget-version: '5.x' # SDK Version to use.
+    nuget-version: '5.x'
 - run: nuget restore MyProject.sln
 ```
 
@@ -74,7 +74,7 @@ steps:
 - uses: actions/checkout@master
 - uses: nuget/setup-nuget-exe@v1
   with:
-    nuget-version: '5.x' # SDK Version to use.
+    nuget-version: '5.x'
 - uses: actions/cache@v1
   id: cache
   with:
