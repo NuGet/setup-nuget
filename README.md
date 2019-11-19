@@ -4,10 +4,9 @@ This action downloads and installs a given version of `NuGet.exe`. Using this
 action will add `nuget` to your `$PATH` on all operating systems, including
 macOS and linux, without having to prefix it with `mono`.
 
-As `nuget.exe` is eventually getting phased out, please consider using the
+NuGet functionality also gets delivered with Visual Studio, msbuild and dotnet SDK. You should consider using the
 official [`setup-dotnet`](https://github.com/actions/setup-dotnet) or
-[one of the `msbuild` actions](https://github.com/marketplace?utf8=%E2%9C%93&query=msbuild)
-instead.
+[one of the `msbuild` actions](https://github.com/marketplace?utf8=%E2%9C%93&query=msbuild).
 
 # Usage
 
