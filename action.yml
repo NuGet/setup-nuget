@@ -13,5 +13,5 @@ runs:
   using: 'node12'
   main: 'lib/main.js'
 branding:
-  icon: download
+  icon: package
   color: blue
