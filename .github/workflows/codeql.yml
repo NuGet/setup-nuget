@@ -1,5 +1,8 @@
 name: "Code scanning - action"
 
+paths-ignore:
+  - dist
+
 on:
   push:
   pull_request:
