@@ -1,6 +1,6 @@
 {
   "name": "setup-nuget-exe",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "description": "Download and install NuGet.exe for use in GitHub Actions.",
   "main": "lib/main.js",
