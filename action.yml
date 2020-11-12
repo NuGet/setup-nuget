@@ -11,7 +11,7 @@ inputs:
     description: 'Source to scope the NuGet API Key to.'
 runs:
   using: 'node12'
-  main: 'lib/main.js'
+  main: 'dist/index.js'
 branding:
   icon: package
   color: blue
