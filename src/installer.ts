@@ -23,16 +23,19 @@ export default async function install(
     );
   }
   core.debug(`nuget.exe cache path: ${cachePath}.`);
-  core.exportVariable('NUGET', `${cachePath}/nuget.exe`);
+  const nugetPath = path.join(cachePath, 'nuget.exe');
+  core.exportVariable('NUGET', nugetPath);
+  
   if (process.platform !== 'win32') {
     core.debug(`Creating dummy 'nuget' script.`);
     const scriptPath = path.join(cachePath, 'nuget');
     fs.writeFileSync(
       scriptPath,
-      `#!/bin/sh\nmono $MONO_OPTIONS ${path.join(cachePath, 'nuget.exe')} "$@"`
+      `#!/bin/sh\nmono $MONO_OPTIONS ${nugetPath} "$@"`
     );
     fs.chmodSync(scriptPath, '755');
   }
+  
   core.addPath(cachePath);
   core.setOutput('nuget-version', tool.version);
   console.log(`Installed nuget.exe version ${tool.version}`);
