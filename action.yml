@@ -10,7 +10,7 @@ inputs:
   nuget-api-key-source:
     description: 'Source to scope the NuGet API Key to.'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: package
