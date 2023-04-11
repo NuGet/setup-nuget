@@ -24,7 +24,7 @@ export default async function pickVersion(spec: string): Promise<Tool> {
   let range = semver.validRange(spec, true);
   let selected;
   if (range) {
-    selected = versions.find(v => semver.satisfies(v.version, range, true));
+    selected = versions.find(v => semver.satisfies(v.version, (range as string), true));
   } else {
     let stage =
       spec == 'latest'
