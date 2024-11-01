@@ -33,7 +33,7 @@
     "typed-rest-client": "^2.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.8.6",
     "@typescript-eslint/parser": "^8.0.0",
     "@vercel/ncc": "^0.38.2",
