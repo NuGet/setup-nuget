@@ -11,3 +11,10 @@ updates:
       interval: "monthly"
     labels:
       - "maintenance"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "maintenance"
