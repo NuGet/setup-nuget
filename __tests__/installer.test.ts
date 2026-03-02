@@ -5,8 +5,8 @@ import * as url from 'url';
 import * as io from '@actions/io';
 import * as fs from 'fs';
 
-const toolDir = path.join(__dirname, 'runner', 'tools');
-const tempDir = path.join(__dirname, 'runner', 'temp');
+const toolDir = path.join(import.meta.dirname, 'runner', 'tools');
+const tempDir = path.join(import.meta.dirname, 'runner', 'temp');
 const IS_WINDOWS = process.platform === 'win32';
 const HOST = 'https://dist.nuget.org';
 const PATH = '/tools.json';

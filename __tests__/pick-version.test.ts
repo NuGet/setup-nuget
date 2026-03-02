@@ -1,4 +1,4 @@
-import nock = require('nock');
+import nock from 'nock';
 import pickVersion from '../src/pick-version';
 
 const HOST = 'https://dist.nuget.org';
