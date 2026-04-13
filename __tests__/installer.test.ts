@@ -1,7 +1,6 @@
 import nock from 'nock';
 import mode2Perm from 'mode-to-permissions';
 import * as path from 'path';
-import * as url from 'url';
 import * as io from '@actions/io';
 import * as fs from 'fs';
 
@@ -72,7 +71,8 @@ describe('installer tests', () => {
       .get(PATH)
       .once()
       .reply(200, TOOLS_JSON);
-    const p = url.parse(TOOLS_JSON['nuget.exe'][0].url).path || '';
+    const requestUrl = new URL(TOOLS_JSON['nuget.exe'][0].url);
+    const p = `${requestUrl.pathname}${requestUrl.search}`;
     srv
       .get(p)
       .once()
