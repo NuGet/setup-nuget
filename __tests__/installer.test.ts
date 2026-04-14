@@ -4,8 +4,8 @@ import * as path from 'path';
 import * as io from '@actions/io';
 import * as fs from 'fs';
 
-const toolDir = path.join(__dirname, 'runner', 'tools');
-const tempDir = path.join(__dirname, 'runner', 'temp');
+const toolDir = path.join(import.meta.dirname, 'runner', 'tools');
+const tempDir = path.join(import.meta.dirname, 'runner', 'temp');
 const IS_WINDOWS = process.platform === 'win32';
 const HOST = 'https://dist.nuget.org';
 const PATH = '/tools.json';
@@ -48,7 +48,7 @@ process.env['RUNNER_TOOL_CACHE'] = toolDir;
 process.env['RUNNER_TEMP'] = tempDir;
 
 import * as tc from '@actions/tool-cache';
-import installer from '../src/installer';
+import installer from '../src/installer.js';
 
 describe('installer tests', () => {
   beforeAll(async () => {

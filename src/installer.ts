@@ -3,7 +3,7 @@ import * as tc from '@actions/tool-cache';
 import * as fs from 'fs';
 import * as path from 'path';
 import {exec} from '@actions/exec';
-import pickVersion from './pick-version';
+import pickVersion from './pick-version.js';
 
 export default async function install(
   spec = 'latest',

@@ -1,5 +1,5 @@
-import nock = require('nock');
-import pickVersion from '../src/pick-version';
+import nock from 'nock';
+import pickVersion from '../src/pick-version.js';
 
 const HOST = 'https://dist.nuget.org';
 const PATH = '/tools.json';
