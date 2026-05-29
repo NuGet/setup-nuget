@@ -48,5 +48,8 @@
     "prettier": "3.8.2",
     "ts-jest": "^29.4.9",
     "typescript": "^6.0.3"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.11.1": true
   }
 }
