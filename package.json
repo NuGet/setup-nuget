@@ -44,7 +44,7 @@
     "jest-circus": "^30.3.0",
     "js-yaml": "^4.2.0",
     "mode-to-permissions": "0.0.2",
-    "nock": "^14.0.14",
+    "nock": "^14.0.15",
     "prettier": "3.8.3",
     "ts-jest": "^29.4.9",
     "typescript": "^6.0.3"
