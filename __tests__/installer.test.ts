@@ -44,6 +44,7 @@ const TOOLS_JSON = {
     }
   ]
 };
+const TOOLS_JSON_RESPONSE = JSON.stringify(TOOLS_JSON);
 process.env['RUNNER_TOOL_CACHE'] = toolDir;
 process.env['RUNNER_TEMP'] = tempDir;
 
@@ -54,6 +55,21 @@ describe('installer tests', () => {
   beforeAll(async () => {
     await io.rmRF(toolDir);
     await io.rmRF(tempDir);
+  });
+
+  beforeEach(() => {
+    if (!nock.isActive()) {
+      nock.activate();
+    }
+    nock.cleanAll();
+  });
+
+  afterEach(() => {
+    nock.abortPendingRequests();
+    nock.cleanAll();
+    if (nock.isActive()) {
+      nock.restore();
+    }
   });
 
   afterAll(async () => {
@@ -70,7 +86,7 @@ describe('installer tests', () => {
     srv
       .get(PATH)
       .once()
-      .reply(200, TOOLS_JSON);
+      .reply(200, TOOLS_JSON_RESPONSE);
     const requestUrl = new URL(TOOLS_JSON['nuget.exe'][0].url);
     const p = `${requestUrl.pathname}${requestUrl.search}`;
     srv
