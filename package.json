@@ -42,7 +42,7 @@
     "eslint-plugin-jest": "^29.15.2",
     "jest": "^30.3.0",
     "jest-circus": "^30.3.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.2.0",
     "mode-to-permissions": "0.0.2",
     "nock": "^14.0.14",
     "prettier": "3.8.3",
