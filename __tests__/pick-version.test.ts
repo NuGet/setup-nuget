@@ -71,7 +71,7 @@ test('picks a version based on concrete version', async () => {
 test('picks a version based on semver range', async () => {
   const srv = nock(HOST);
   srv.get(PATH).reply(200, TOOLS_JSON_RESPONSE);
-  let tool = await pickVersion('5.3');
+  const tool = await pickVersion('5.3');
   srv.done();
   expect(tool).toStrictEqual({
     version: '5.3.1',
