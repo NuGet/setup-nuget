@@ -38,11 +38,27 @@ const TOOLS_JSON = {
     }
   ]
 };
+const TOOLS_JSON_RESPONSE = JSON.stringify(TOOLS_JSON);
+
+beforeEach(() => {
+  if (!nock.isActive()) {
+    nock.activate();
+  }
+  nock.cleanAll();
+});
+
+afterEach(() => {
+  nock.abortPendingRequests();
+  nock.cleanAll();
+  if (nock.isActive()) {
+    nock.restore();
+  }
+});
 
 test('picks a version based on concrete version', async () => {
   const srv = nock(HOST);
-  srv.get(PATH).reply(200, TOOLS_JSON);
-  let tool = await pickVersion('5.3.0');
+  srv.get(PATH).reply(200, TOOLS_JSON_RESPONSE);
+  const tool = await pickVersion('5.3.0');
   srv.done();
   expect(tool).toStrictEqual({
     version: '5.3.0',
@@ -54,8 +70,8 @@ test('picks a version based on concrete version', async () => {
 
 test('picks a version based on semver range', async () => {
   const srv = nock(HOST);
-  srv.get(PATH).reply(200, TOOLS_JSON);
-  let tool = await pickVersion('5.3');
+  srv.get(PATH).reply(200, TOOLS_JSON_RESPONSE);
+  const tool = await pickVersion('5.3');
   srv.done();
   expect(tool).toStrictEqual({
     version: '5.3.1',
@@ -70,7 +86,7 @@ test('picks a version based on stage', async () => {
   srv
     .get(PATH)
     .times(2)
-    .reply(200, TOOLS_JSON);
+    .reply(200, TOOLS_JSON_RESPONSE);
   let tool = await pickVersion('latest');
   expect(tool).toStrictEqual({
     version: '5.3.1',
@@ -90,18 +106,18 @@ test('picks a version based on stage', async () => {
 
 test('errors when no version could be found', async () => {
   const srv = nock(HOST);
-  srv.get(PATH).reply(200, TOOLS_JSON);
-  let promise = pickVersion('4');
-  promise.catch(() => {}).finally(() => srv.done());
-  expect(promise).rejects.toThrow("No valid versions could be found for '4'.");
+  srv.get(PATH).reply(200, TOOLS_JSON_RESPONSE);
+  await expect(pickVersion('4')).rejects.toThrow(
+    "No valid versions could be found for '4'."
+  );
+  srv.done();
 });
 
 test('errors if an invalid label is passed in', async () => {
   const srv = nock(HOST);
-  srv.get(PATH).reply(200, TOOLS_JSON);
-  let promise = pickVersion('yesterday');
-  promise.catch(() => {}).finally(() => srv.done());
-  expect(promise).rejects.toThrow(
+  srv.get(PATH).reply(200, TOOLS_JSON_RESPONSE);
+  await expect(pickVersion('yesterday')).rejects.toThrow(
     "Invalid release label: 'yesterday'. Valid labels are 'latest' and 'preview'."
   );
+  srv.done();
 });
