@@ -45,7 +45,7 @@
     "js-yaml": "^4.2.0",
     "mode-to-permissions": "0.0.2",
     "nock": "^14.0.15",
-    "prettier": "3.8.3",
+    "prettier": "3.9.4",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3"
   },
